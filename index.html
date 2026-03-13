@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light only">
+<title>The Daily Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* 強制淺色，避免手機夜間模式變黑 */
+  :root { color-scheme: light only; }
+  html { background: #f5f0e8 !important; }
+
+:root {
+–ink: #1a1a2e; –paper: #f5f0e8; –accent: #c8432a;
+–gold: #d4a853; –muted: #8a8070; –green: #2d6a4f; –card: #fffdf7;
+}
+
+- { margin:0; padding:0; box-sizing:border-box; }
+  body {
+  background: var(–paper) !important;
+  color: var(–ink) !important;
+  font-family: ‘DM Sans’, sans-serif;
+  min-height: 100vh;
+  }
+
+/* Header */
+header {
+border-bottom: 2px solid var(–ink);
+padding: 1.2rem 2rem;
+display: flex; align-items: baseline; gap: 1rem;
+background: var(–card);
+}
+.masthead { font-family:‘Playfair Display’,serif; font-size:1.8rem; font-weight:900; }
+.edition { font-size:.75rem; color:var(–muted); letter-spacing:.1em; text-transform:uppercase; border-left:1px solid var(–muted); padding-left:1rem; }
+.header-right { margin-left:auto; display:flex; align-items:center; gap:1rem; }
+.user-badge { font-size:.85rem; color:var(–muted); }
+.user-badge b { color:var(–ink); }
+.score-num { font-family:‘Playfair Display’,serif; font-size:1.4rem; font-weight:700; color:var(–accent); }
+
+/* Screens */
+.screen { display:none; }
+.screen.active { display:block; }
+
+/* Login / History shared card */
+.center-wrap { max-width:500px; margin:3rem auto; padding:0 1.5rem; }
+.card {
+background: var(–card) !important;
+border: 1px solid #ddd8cc; border-radius:3px;
+padding: 2.2rem 2rem;
+box-shadow: 3px 3px 0 #e0dbd0;
+color: var(–ink) !important;
+}
+.card-title { font-family:‘Playfair Display’,serif; font-size:1.6rem; font-weight:900; margin-bottom:.4rem; color:var(–ink); }
+.card-sub { font-size:.88rem; color:var(–muted); margin-bottom:1.8rem; line-height:1.6; }
+
+label { font-size:.73rem; letter-spacing:.1em; text-transform:uppercase; color:var(–muted); display:block; margin-bottom:.4rem; }
+input[type=text] {
+width:100%; padding:.75rem 1rem;
+border:1.5px solid #c8c3b8; border-radius:2px;
+font-family:‘DM Sans’,sans-serif; font-size:.95rem;
+background: white !important; color: var(–ink) !important;
+-webkit-text-fill-color: var(–ink) !important;
+transition:border-color .2s; margin-bottom:1rem;
+}
+input[type=text]:focus { outline:none; border-color:var(–ink); }
+
+.btn-primary {
+display:block; width:100%; padding:.85rem;
+background:var(–ink) !important; color:white !important;
+border:none; border-radius:2px;
+font-family:‘DM Sans’,sans-serif; font-size:.93rem; font-weight:500;
+cursor:pointer; letter-spacing:.04em; transition:background .15s;
+margin-bottom:.5rem;
+}
+.btn-primary:hover { background:var(–accent) !important; }
+.btn-outline {
+display:block; width:100%; padding:.85rem;
+background:white !important; color:var(–ink) !important;
+border:1.5px solid var(–ink); border-radius:2px;
+font-family:‘DM Sans’,sans-serif; font-size:.93rem; font-weight:500;
+cursor:pointer; letter-spacing:.04em; transition:all .15s;
+}
+.btn-outline:hover { background:var(–paper) !important; }
+.note { font-size:.78rem; color:var(–muted); margin-top:.8rem; line-height:1.5; text-align:center; }
+
+/* Quiz main */
+#quizScreen main { max-width:780px; margin:0 auto; padding:2rem 1.5rem; }
+.progress-strip { display:flex; gap:4px; margin-bottom:2rem; }
+.pdot { height:4px; flex:1; background:#d4cfc5; border-radius:2px; transition:background .3s; }
+.pdot.done { background:var(–green); }
+.pdot.cur  { background:var(–accent); }
+
+.news-card {
+background: var(–card) !important; color: var(–ink) !important;
+border:1px solid #ddd8cc; border-radius:2px;
+padding:1.8rem; margin-bottom:1.5rem;
+box-shadow:3px 3px 0 #e0dbd0;
+}
+.src-tag { font-size:.68rem; font-weight:500; letter-spacing:.12em; text-transform:uppercase; color:var(–accent); margin-bottom:.5rem; display:flex; align-items:center; gap:.35rem; }
+.src-tag::before { content:’’; width:6px; height:6px; background:var(–accent); border-radius:50%; display:inline-block; }
+.news-title { font-family:‘Playfair Display’,serif; font-size:1.25rem; font-weight:700; line-height:1.35; margin-bottom:.7rem; color:var(–ink); }
+.news-summary { font-size:.88rem; line-height:1.7; color:#3a3530; }
+.hl { background:#fef3c7 !important; padding:0 3px; border-radius:2px; font-weight:500; color:#92400e !important; border-bottom:2px dashed #d97706; cursor:help; }
+
+.q-section { margin-top:1.5rem; }
+.q-label { font-size:.7rem; letter-spacing:.15em; text-transform:uppercase; color:var(–muted); margin-bottom:.7rem; font-weight:500; }
+.q-text { font-family:‘Playfair Display’,serif; font-size:1.05rem; font-weight:700; margin-bottom:1.1rem; line-height:1.4; color:var(–ink); }
+
+.opts { display:grid; grid-template-columns:1fr 1fr; gap:.6rem; }
+.opt {
+background:white !important; color:var(–ink) !important;
+border:1.5px solid #c8c3b8; border-radius:2px;
+padding:.75rem .9rem; font-family:‘DM Sans’,sans-serif; font-size:.86rem;
+cursor:pointer; text-align:left; transition:all .15s; line-height:1.4;
+}
+.opt:hover:not(:disabled) { border-color:var(–ink); transform:translateY(-1px); box-shadow:2px 2px 0 #c8c3b8; }
+.opt.correct { background:#d1fae5 !important; border-color:var(–green); color:var(–green) !important; font-weight:500; }
+.opt.wrong   { background:#fee2e2 !important; border-color:#ef4444; color:#b91c1c !important; }
+.opt:disabled { cursor:default; }
+
+.fb {
+margin-top:.9rem; padding:.9rem 1.1rem; border-radius:2px;
+font-size:.86rem; line-height:1.6;
+display:none;
+}
+.fb.show-correct { display:block; background:#ecfdf5 !important; color:#065f46 !important; border-left:3px solid var(–green); }
+.fb.show-wrong   { display:block; background:#fef2f2 !important; color:#991b1b !important; border-left:3px solid #ef4444; }
+.fb-word { font-weight:700; font-family:‘Playfair Display’,serif; }
+
+.zh-box {
+margin-top:.7rem; padding:.9rem 1.1rem;
+background:#fffbf0 !important; color:#5a4a20 !important;
+border-left:3px solid var(–gold); border-radius:2px;
+font-size:.86rem; line-height:1.8;
+display:none;
+}
+.zh-box.show { display:block; }
+.zh-word { font-weight:700; font-size:.95rem; color:var(–ink) !important; }
+
+.act-row { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.1rem; }
+.act-next {
+padding:.75rem 1.8rem; background:var(–ink) !important; color:white !important;
+border:none; border-radius:2px; font-family:‘DM Sans’,sans-serif; font-size:.88rem;
+font-weight:500; cursor:pointer; transition:background .15s;
+display:none;
+}
+.act-next.show { display:inline-block; }
+.act-next:hover { background:var(–accent) !important; }
+
+.act-zh {
+padding:.75rem 1.4rem; background:white !important; color:var(–ink) !important;
+border:1.5px solid var(–ink); border-radius:2px; font-family:‘DM Sans’,sans-serif;
+font-size:.88rem; font-weight:500; cursor:pointer; transition:all .15s;
+display:none;
+}
+.act-zh.show { display:inline-block; }
+.act-zh:hover { background:var(–gold) !important; border-color:var(–gold); }
+
+.qhdr { display:flex; justify-content:space-between; align-items:center; margin-bottom:1.3rem; }
+.qctr { font-size:.78rem; color:var(–muted); }
+
+/* Result */
+#resultScreen main { max-width:780px; margin:0 auto; padding:2rem 1.5rem; }
+.result-card {
+background:var(–card) !important; color:var(–ink) !important;
+border:1px solid #ddd8cc; border-radius:2px; padding:3rem 2rem;
+box-shadow:3px 3px 0 #e0dbd0; text-align:center;
+}
+.r-grade { font-family:‘Playfair Display’,serif; font-size:5rem; font-weight:900; color:var(–accent); line-height:1; }
+.r-label { font-size:.75rem; letter-spacing:.15em; text-transform:uppercase; color:var(–muted); margin:.5rem 0 1rem; }
+.r-msg   { font-family:‘Playfair Display’,serif; font-size:1.35rem; margin-bottom:.4rem; color:var(–ink); }
+.r-sub   { font-size:.88rem; color:var(–muted); margin-bottom:.6rem; }
+.streak  { display:inline-block; background:#fef3c7 !important; color:#92400e !important; border:1px solid #d97706; border-radius:20px; padding:.3rem 1rem; font-size:.83rem; font-weight:500; margin-bottom:1.5rem; }
+.r-status { font-size:.78rem; color:var(–muted); font-style:italic; margin-bottom:1.5rem; }
+
+/* History table */
+.htable { width:100%; border-collapse:collapse; font-size:.85rem; margin-top:1rem; }
+.htable th { padding:.5rem .4rem; border-bottom:2px solid var(–ink); text-align:left; color:var(–ink); font-weight:600; }
+.htable td { padding:.5rem .4rem; border-bottom:1px solid #e0dbd0; color:var(–ink); }
+.badges { display:flex; gap:.7rem; flex-wrap:wrap; margin-bottom:1rem; }
+.badge-fire  { background:#fef3c7 !important; color:#92400e !important; border:1px solid #d97706; border-radius:4px; padding:.3rem .8rem; font-size:.82rem; }
+.badge-green { background:#ecfdf5 !important; color:var(–green) !important; border:1px solid var(–green); border-radius:4px; padding:.3rem .8rem; font-size:.82rem; }
+.hist-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1.3rem; }
+.close-btn { background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(–muted); line-height:1; }
+
+@media(max-width:600px) {
+.opts { grid-template-columns:1fr; }
+.masthead { font-size:1.4rem; }
+.edition { display:none; }
+header { padding:1rem; }
+.card { padding:1.5rem; }
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <div class="masthead">📰 Daily Quiz</div>
+  <div class="edition">English Learning</div>
+  <div class="header-right">
+    <div id="headerInfo" style="display:flex;align-items:center;gap:.8rem;font-size:.82rem">
+      <span id="hNick" style="display:none;font-weight:600;color:var(--ink)"></span>
+      <span id="hPlays" style="display:none;color:var(--muted)"></span>
+      <span style="color:var(--muted)">Score</span>
+      <span class="score-num" id="scoreDisplay">—</span>
+    </div>
+  </div>
+</header>
+
+<!-- ① Login -->
+
+<div id="loginScreen" class="screen active">
+  <div class="center-wrap">
+    <div class="card">
+      <div class="card-title">每日新聞測驗</div>
+      <div class="card-sub">每天最多 10 次，從國際新聞學英文單字<br>輸入暱稱開始今天的挑戰！</div>
+      <label>你的暱稱</label>
+      <input type="text" id="nicknameInput" placeholder="e.g. Mz, Sara, Wendy..." maxlength="20">
+      <div id="playsLeftMsg" style="font-size:.82rem;color:var(--muted);margin-bottom:.8rem;display:none"></div>
+      <button class="btn-primary" id="startBtn" onclick="startQuiz()">開始今天的測驗 →</button>
+      <button class="btn-outline" onclick="showVocabReview()">📖 今日學習單字</button>
+      <button class="btn-outline" onclick="showHistory()">📊 查看歷史成績</button>
+      <div class="note">暱稱會用來記錄分數，下次輸入同樣暱稱可查看歷史成績</div>
+    </div>
+  </div>
+</div>
+
+<!-- ② Quiz -->
+
+<div id="quizScreen" class="screen">
+  <main>
+    <div class="progress-strip" id="progressStrip"></div>
+    <div class="qhdr">
+      <div class="qctr" id="counterText"></div>
+    </div>
+    <div class="news-card">
+      <div class="src-tag" id="srcTag"></div>
+      <div class="news-title" id="newsTitle"></div>
+      <div class="news-summary" id="newsSummary"></div>
+    </div>
+    <div class="q-section">
+      <div class="q-label">Vocabulary Challenge</div>
+      <div class="q-text" id="qText"></div>
+      <div class="opts" id="optsGrid"></div>
+      <div class="fb" id="fb"></div>
+      <div class="zh-box" id="zhBox"></div>
+      <div class="act-row">
+        <button class="act-next" id="nextBtn" onclick="nextQ()">Next Question →</button>
+        <button class="act-zh"  id="zhBtn"  onclick="showZh()">看中文解釋 🇹🇼</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ③ Result -->
+
+<div id="resultScreen" class="screen">
+  <main>
+    <div class="result-card">
+      <div class="r-grade"  id="rGrade"></div>
+      <div class="r-label">Today's Score</div>
+      <div class="r-msg"   id="rMsg"></div>
+      <div class="r-sub"   id="rSub"></div>
+      <div class="streak"  id="rStreak">🔥 連續 1 天</div><br>
+      <div class="r-status" id="rStatus"></div>
+      <button class="btn-primary" style="max-width:220px;margin:0 auto" onclick="goHome()">← 返回首頁</button>
+    </div>
+  </main>
+</div>
+
+<!-- ④ History -->
+
+<div id="historyScreen" class="screen">
+  <div class="center-wrap" style="max-width:600px">
+    <div class="card">
+      <div class="hist-header">
+        <div class="card-title" style="font-size:1.3rem">📊 歷史成績</div>
+        <button class="close-btn" onclick="closeHistory()">✕</button>
+      </div>
+      <label>輸入暱稱查詢</label>
+      <input type="text" id="histNick" placeholder="你的暱稱" onkeydown="if(event.key==='Enter')loadHistory()">
+      <button class="btn-primary" onclick="loadHistory()">查詢 →</button>
+      <div id="histContent"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ⑤ Vocab Review -->
+
+<div id="vocabScreen" class="screen">
+  <div class="center-wrap" style="max-width:640px">
+    <div class="card">
+      <div class="hist-header">
+        <div class="card-title" style="font-size:1.3rem">📖 今日學習單字</div>
+        <button class="close-btn" onclick="closeVocabReview()">✕</button>
+      </div>
+      <div id="vocabContent"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ⑤ Vocab Review -->
+
+<div id="vocabScreen" class="screen">
+  <div class="center-wrap" style="max-width:640px">
+    <div class="card">
+      <div class="hist-header">
+        <div class="card-title" style="font-size:1.3rem">📖 今日學習單字</div>
+        <button class="close-btn" onclick="closeVocabReview()">✕</button>
+      </div>
+      <div id="vocabContent"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = 'https://script.google.com/macros/s/AKfycbxtB2p86pFKhRj7GGW9kGMdozRmWkkGNI4qzjEU_2ZcOqAi2MyD-qIS3Br6VnmVgDY/exec';
+const TOTAL = 5;
+const MAX_PLAYS = 10;
+
+// ── Q bank ──
+const Q = [
+  { src:"BBC News", title:"Mission accomplished? The 2003 boast that haunts today's Iran conflict",
+    summary:"The echoes between the conflicts are certainly there but there are also profound differences in the geopolitical landscape and international response.",
+    word:"geopolitical", cat:"politics",
+    def:"relating to politics, especially international relations, as influenced by geographical factors",
+    q:"The article mentions the 'geopolitical landscape'. What does 'geopolitical' most closely mean?",
+    opts:["relating to geography and international politics","relating to economic trade agreements","relating to environmental concerns","relating to cultural exchanges between nations"],
+    ans:0,
+    zh:{w:"地緣政治的（geopolitical）",d:"指地理位置如何影響國際政治與外交關係的形容詞。",c:"文章提到伊朗衝突的「地緣政治格局」，意指各國因地理位置不同，所形成的複雜政治角力與利益關係。",e:"台灣海峽的地緣政治地位對整個亞太地區的安全局勢影響深遠。"}
+  },
+  { src:"BBC News", title:"Iran's new supreme leader vows to block Strait of Hormuz in first statement",
+    summary:"A message attributed to Mojtaba Khamenei says the country will continue targeting American bases in the region if attacks continue.",
+    word:"attributed", cat:"politics",
+    def:"regarded as being caused by or belonging to a particular person or thing",
+    q:"The summary says a message was 'attributed to' someone. What does 'attributed to' mean here?",
+    opts:["written and confirmed by","believed or said to come from","denied and rejected by","translated and edited by"],
+    ans:1,
+    zh:{w:"歸因於、據稱出自（attributed to）",d:"指某件事被認為是由某人所說或所做，但不一定經過正式確認。",c:"新聞說這則訊息「據稱出自」哈米尼，表示消息來源未經官方確認，但被廣泛認為是他說的。",e:"這份聲明被歸因於該國最高領導人，但尚未得到正式證實。"}
+  },
+  { src:"The Verge", title:"Google's TV Streamer review: the best Android TV box you can buy",
+    summary:"The device sets a new benchmark for streaming performance and value, making competing products look outdated by comparison.",
+    word:"benchmark", cat:"tech",
+    def:"a standard or point of reference against which things may be compared",
+    q:"The review says the device 'sets a new benchmark'. What does 'benchmark' mean in this context?",
+    opts:["a physical test conducted in a laboratory","a standard used for comparison","a price reduction for consumers","a software update released by the company"],
+    ans:1,
+    zh:{w:"基準、標竿（benchmark）",d:"用來與其他事物比較的標準或參考點，常用於評比產品、績效或品質。",c:"評測說這台裝置「樹立了新標竿」，意思是它成為同類產品中其他品牌必須追趕的新標準。",e:"這款手機的電池續航力為業界樹立了新標竿。"}
+  },
+  { src:"Al Jazeera", title:"Oil stays above $70 as markets weigh ceasefire prospects",
+    summary:"Energy markets remain cautiously optimistic as diplomats work toward a potential resolution, though analysts warn that volatility could return.",
+    word:"volatility", cat:"business",
+    def:"liability to change rapidly and unpredictably, especially for the worse",
+    q:"The article warns that 'volatility could return' to energy markets. What does 'volatility' mean?",
+    opts:["rapid and unpredictable change","steady and consistent growth","government regulation of prices","environmental impact of energy use"],
+    ans:0,
+    zh:{w:"波動性、不穩定性（volatility）",d:"形容某事物快速且難以預測地劇烈變化，常用於金融、能源或政治局勢。",c:"分析師警告石油市場的「波動性可能回歸」，意指油價可能再次出現大幅且難以預測的漲跌。",e:"受地緣政治緊張局勢影響，股市近期波動性大幅上升。"}
+  },
+  { src:"BBC Entertainment", title:"Hozier and Jessie Buckley team up for stunning album",
+    summary:"The album will appeal to fans of both artists, blending folk influences with contemporary production in a way that feels both familiar and innovative.",
+    word:"innovative", cat:"entertainment",
+    def:"featuring new methods or ideas; original and creative in thinking",
+    q:"The album is described as 'innovative'. Which word is closest in meaning?",
+    opts:["traditional and familiar","commercially successful","original and creative","simple and straightforward"],
+    ans:2,
+    zh:{w:"創新的（innovative）",d:"採用新方法或新想法的；具有原創性和創意的。",c:"專輯被形容為「innovative」，意指它在民謠傳統的基礎上融入了新的製作方式，帶來耳目一新的聆聽體驗。",e:"這位設計師以創新的手法重新詮釋了傳統工藝。"}
+  }
+];
+
+// ── state ──
+let cur=0, score=0, didAnswer=false, lockedIdx=0;
+let nick='', uid='', wordLog=[], sessionPool=[];
+
+// ── localStorage helpers ──
+function getToday(){ return new Date().toISOString().split('T')[0]; }
+function getSavedNick(){ return localStorage.getItem('quiz_nick')||''; }
+function setSavedNick(n){ localStorage.setItem('quiz_nick',n); }
+function getPlaysToday(u){ return parseInt(localStorage.getItem('quiz_plays_'+u+'_'+getToday())||'0',10); }
+function incPlays(u){ localStorage.setItem('quiz_plays_'+u+'_'+getToday(), getPlaysToday(u)+1); }
+
+function getMasteredToday(u){
+  try{ return JSON.parse(localStorage.getItem('quiz_mastered_'+u+'_'+getToday())||'[]'); }catch(e){ return []; }
+}
+function addMastered(u,words){
+  const m=getMasteredToday(u);
+  words.forEach(w=>{ if(!m.includes(w)) m.push(w); });
+  localStorage.setItem('quiz_mastered_'+u+'_'+getToday(), JSON.stringify(m));
+}
+function getTodayVocabLog(u){
+  try{ return JSON.parse(localStorage.getItem('quiz_vocablog_'+u+'_'+getToday())||'[]'); }catch(e){ return []; }
+}
+function appendTodayVocabLog(u,words){
+  const log=getTodayVocabLog(u);
+  words.forEach(item=>{
+    const ex=log.find(x=>x.word===item.word);
+    if(ex){ if(item.correct) ex.correct=true; }
+    else log.push({...item});
+  });
+  localStorage.setItem('quiz_vocablog_'+u+'_'+getToday(), JSON.stringify(log));
+}
+
+// ── pool builder ──
+function shuffle(arr){
+  for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; }
+  return arr;
+}
+function buildPool(){
+  const mastered=getMasteredToday(uid);
+  let pool=Q.filter(q=>!mastered.includes(q.word));
+  if(pool.length<TOTAL){ const extra=shuffle(Q.filter(q=>mastered.includes(q.word))); pool=[...pool,...extra]; }
+  return shuffle(pool).slice(0,TOTAL);
+}
+
+// ── JSONP (bypasses CORS completely) ──
+function apiJsonp(params){
+  return new Promise((resolve,reject)=>{
+    const cb='_cb'+Date.now();
+    const url=API+'?'+new URLSearchParams({...params,callback:cb});
+    const s=document.createElement('script');
+    const t=setTimeout(()=>{ cleanup(); reject(new Error('請求逾時')); },10000);
+    window[cb]=(d)=>{ cleanup(); resolve(d); };
+    function cleanup(){ clearTimeout(t); delete window[cb]; if(s.parentNode) s.parentNode.removeChild(s); }
+    s.onerror=()=>{ cleanup(); reject(new Error('網路錯誤')); };
+    s.src=url; document.head.appendChild(s);
+  });
+}
+
+// ── screen helper ──
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ── init ──
+window.addEventListener('DOMContentLoaded',()=>{
+  const saved=getSavedNick();
+  if(saved){ document.getElementById('nicknameInput').value=saved; refreshLoginState(saved); updateHeader(saved); }
+  document.getElementById('nicknameInput').addEventListener('input',e=>{
+    const v=e.target.value.trim(); refreshLoginState(v); if(v) updateHeader(v);
+  });
+  document.getElementById('nicknameInput').addEventListener('keydown',e=>{ if(e.key==='Enter') startQuiz(); });
+});
+
+function refreshLoginState(v){
+  if(!v){ document.getElementById('playsLeftMsg').style.display='none'; document.getElementById('startBtn').disabled=false; document.getElementById('startBtn').style.opacity='1'; return; }
+  const u=v.toLowerCase().replace(/\s+/g,'_');
+  const plays=getPlaysToday(u), left=MAX_PLAYS-plays;
+  const msg=document.getElementById('playsLeftMsg'), btn=document.getElementById('startBtn');
+  msg.style.display='block';
+  if(left<=0){ msg.textContent='⛔ 今天已達上限（10/10），明天再來！'; msg.style.color='#ef4444'; btn.disabled=true; btn.style.opacity='.4'; }
+  else{ msg.textContent='今天已玩 '+plays+' 次，剩餘 '+left+' 次'; msg.style.color='var(--muted)'; btn.disabled=false; btn.style.opacity='1'; }
+}
+
+function updateHeader(v){
+  if(!v) return;
+  const u=v.toLowerCase().replace(/\s+/g,'_'), left=MAX_PLAYS-getPlaysToday(u);
+  document.getElementById('hNick').textContent=v; document.getElementById('hNick').style.display='inline';
+  const hp=document.getElementById('hPlays');
+  hp.textContent='剩 '+left+' 次'; hp.style.display='inline'; hp.style.color=left<=2?'#ef4444':'var(--muted)';
+}
+
+// ── start quiz ──
+function startQuiz(){
+  const v=document.getElementById('nicknameInput').value.trim();
+  if(!v){ alert('請輸入暱稱！'); return; }
+  const u=v.toLowerCase().replace(/\s+/g,'_');
+  if(getPlaysToday(u)>=MAX_PLAYS){ alert('今天已達上限 10 次，明天再來！'); return; }
+  nick=v; uid=u; setSavedNick(v); incPlays(uid);
+  document.getElementById('scoreDisplay').textContent='0';
+  updateHeader(v);
+  sessionPool=buildPool(); wordLog=[]; cur=0; score=0; didAnswer=false;
+  buildProgress(); loadQ(); show('quizScreen');
+}
+
+function buildProgress(){
+  const s=document.getElementById('progressStrip'); s.innerHTML='';
+  for(let i=0;i<TOTAL;i++){
+    const d=document.createElement('div');
+    d.className='pdot'+(i===cur?' cur':i<cur?' done':'');
+    d.id='pd'+i; s.appendChild(d);
+  }
+}
+
+function loadQ(){
+  const q=sessionPool[cur]; didAnswer=false;
+  document.getElementById('counterText').textContent='Question '+(cur+1)+' of '+TOTAL;
+  document.getElementById('srcTag').textContent=q.src;
+  document.getElementById('newsTitle').textContent=q.title;
+  document.getElementById('newsSummary').innerHTML=q.summary.replace(
+    new RegExp('\\b'+q.word+'\\b','gi'),
+    '<span class="hl" title="'+q.def+'">$&</span>'
+  );
+  document.getElementById('qText').textContent=q.q;
+  const grid=document.getElementById('optsGrid'); grid.innerHTML='';
+  const idxs=shuffle([0,1,2,3]);
+  const newAns=idxs.indexOf(q.ans);
+  q._sa=newAns;
+  idxs.map(i=>q.opts[i]).forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.textContent=o; b.onclick=()=>checkAns(i); grid.appendChild(b);
+  });
+  document.getElementById('fb').className='fb'; document.getElementById('fb').innerHTML='';
+  document.getElementById('zhBox').className='zh-box'; document.getElementById('zhBox').innerHTML='';
+  document.getElementById('nextBtn').className='act-next';
+  document.getElementById('zhBtn').className='act-zh';
+}
+
+function checkAns(chosen){
+  if(didAnswer) return;
+  didAnswer=true; lockedIdx=cur;
+  const q=sessionPool[cur];
+  const btns=document.querySelectorAll('.opt');
+  const ok=chosen===q._sa;
+  btns.forEach(b=>b.disabled=true);
+  btns[q._sa].classList.add('correct');
+  if(!ok) btns[chosen].classList.add('wrong');
+  if(ok){ score++; document.getElementById('scoreDisplay').textContent=score; }
+  const fb=document.getElementById('fb');
+  fb.className='fb '+(ok?'show-correct':'show-wrong');
+  fb.innerHTML=(ok?'✓ Correct! ':'✗ Not quite. ')+'<span class="fb-word">'+q.word+'</span> — '+q.def;
+  wordLog.push({word:q.word,word_zh:q.zh.w,category:q.cat,correct:ok,zh:q.zh});
+  document.getElementById('nextBtn').className='act-next show';
+  document.getElementById('zhBtn').className='act-zh show';
+  document.getElementById('pd'+cur).className='pdot done';
+}
+
+function showZh(){
+  const zh=sessionPool[lockedIdx].zh;
+  const box=document.getElementById('zhBox');
+  box.className='zh-box show';
+  box.innerHTML='<div class="zh-word">📖 '+zh.w+'</div>'
+    +'<div style="margin-top:.4rem"><b>定義：</b>'+zh.d+'</div>'
+    +'<div style="margin-top:.4rem"><b>文章語境：</b>'+zh.c+'</div>'
+    +'<div style="margin-top:.4rem"><b>例句：</b><em>'+zh.e+'</em></div>';
+  document.getElementById('zhBtn').className='act-zh';
+}
+
+function nextQ(){
+  cur++;
+  if(cur>=TOTAL) showResult();
+  else{ document.getElementById('pd'+cur).className='pdot cur'; loadQ(); }
+}
+
+async function showResult(){
+  const correctWords=wordLog.filter(x=>x.correct).map(x=>x.word);
+  addMastered(uid,correctWords);
+  appendTodayVocabLog(uid,wordLog);
+  show('resultScreen');
+  const pct=Math.round(score/TOTAL*100);
+  document.getElementById('rGrade').textContent=score+'/'+TOTAL;
+  const msgs=['繼續加油！','繼續加油！','不錯喔！','不錯喔！','表現優秀！','完美！'];
+  document.getElementById('rMsg').textContent=msgs[score]||'Good Job!';
+  document.getElementById('rSub').textContent='正確率 '+pct+'%';
+  document.getElementById('rStatus').textContent='儲存中...';
+  try{
+    const r=await apiJsonp({action:'saveScore',user_id:uid,nickname:nick,correct:score,wrong:TOTAL-score,total_questions:TOTAL});
+    document.getElementById('rStreak').textContent='🔥 連續 '+(r.streak||1)+' 天';
+    apiJsonp({action:'saveVocab',user_id:uid,words:JSON.stringify(wordLog.map(x=>({word:x.word,word_zh:x.word_zh,category:x.category,correct:x.correct})))}).catch(()=>{});
+    document.getElementById('rStatus').textContent='✓ 分數已儲存';
+  }catch(e){
+    document.getElementById('rStatus').textContent='（離線模式，分數未儲存）';
+  }
+}
+
+function goHome(){
+  document.getElementById('scoreDisplay').textContent='—';
+  updateHeader(nick); refreshLoginState(nick); show('loginScreen');
+}
+
+// ── vocab review ──
+function showVocabReview(){
+  const v=document.getElementById('nicknameInput').value.trim();
+  const u=v?v.toLowerCase().replace(/\s+/g,'_'):(uid||'');
+  const log=u?getTodayVocabLog(u):[];
+  const box=document.getElementById('vocabContent');
+  if(!log.length){
+    box.innerHTML='<p style="color:var(--muted);font-size:.9rem;margin-top:.8rem">今天還沒有學習紀錄，先去玩一輪吧！</p>';
+  }else{
+    const correct=log.filter(x=>x.correct), wrong=log.filter(x=>!x.correct);
+    let h='';
+    if(correct.length){
+      h+='<div style="font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:.6rem">✓ 已掌握（'+correct.length+' 個）</div>';
+      correct.forEach(item=>{ h+=vocabCard(item,true); });
+    }
+    if(wrong.length){
+      h+='<div style="font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#ef4444;font-weight:600;margin:1.2rem 0 .6rem">✗ 還需練習（'+wrong.length+' 個）</div>';
+      wrong.forEach(item=>{ h+=vocabCard(item,false); });
+    }
+    box.innerHTML=h;
+  }
+  show('vocabScreen');
+}
+
+function vocabCard(item,ok){
+  const zh=item.zh||{};
+  const border=ok?'var(--green)':'#ef4444', bg=ok?'#f0fdf4':'#fff5f5';
+  return '<div style="background:'+bg+';border-left:3px solid '+border+';border-radius:2px;padding:.8rem 1rem;margin-bottom:.7rem;font-size:.86rem;line-height:1.8">'
+    +'<div style="font-family:\'Playfair Display\',serif;font-size:1rem;font-weight:700;color:var(--ink)">'+item.word+'</div>'
+    +'<div><b>中文：</b>'+(zh.w||item.word_zh||'—')+'</div>'
+    +'<div><b>定義：</b>'+(zh.d||'—')+'</div>'
+    +'<div><b>例句：</b><em>'+(zh.e||'—')+'</em></div>'
+    +'</div>';
+}
+
+function closeVocabReview(){ show('loginScreen'); }
+
+// ── history ──
+function showHistory(){
+  const v=document.getElementById('nicknameInput').value.trim();
+  if(v) document.getElementById('histNick').value=v;
+  document.getElementById('histContent').innerHTML='';
+  show('historyScreen'); if(v) loadHistory();
+}
+function closeHistory(){ show('loginScreen'); }
+
+async function loadHistory(){
+  const v=document.getElementById('histNick').value.trim();
+  if(!v){ alert('請輸入暱稱'); return; }
+  const huid=v.toLowerCase().replace(/\s+/g,'_');
+  const box=document.getElementById('histContent');
+  box.innerHTML='<p style="color:var(--muted);font-size:.88rem;margin-top:.8rem">載入中...</p>';
+  try{
+    const data=await apiJsonp({action:'getScores',user_id:huid});
+    if(!data.success||!data.data||!data.data.length){
+      box.innerHTML='<p style="color:var(--muted);font-size:.88rem;margin-top:.8rem">查無紀錄，還沒玩過或暱稱不同！</p>'; return;
+    }
+    const rows=data.data.slice().reverse(), streak=data.streak||0;
+    let h='<div class="badges">'
+      +'<span class="badge-fire">🔥 連續 '+streak+' 天</span>'
+      +'<span class="badge-green">📅 共 '+rows.length+' 筆紀錄</span></div>'
+      +'<table class="htable"><thead><tr><th>日期</th><th style="text-align:center">正確</th><th style="text-align:center">錯誤</th><th style="text-align:center">正確率</th></tr></thead><tbody>';
+    rows.forEach(r=>{
+      h+='<tr><td>'+(r.date||'-')+'</td>'
+        +'<td style="text-align:center;color:var(--green);font-weight:600">'+(r.correct||0)+'</td>'
+        +'<td style="text-align:center;color:#ef4444">'+(r.wrong||0)+'</td>'
+        +'<td style="text-align:center">'+(r.accuracy||'-')+'</td></tr>';
+    });
+    h+='</tbody></table>';
+    box.innerHTML=h;
+  }catch(e){
+    box.innerHTML='<p style="color:#ef4444;font-size:.88rem;margin-top:.8rem">載入失敗：'+e.message+'</p>';
+  }
+}
+</script>
+
+</body>
+</html>
