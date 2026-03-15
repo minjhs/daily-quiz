@@ -1249,7 +1249,7 @@ async function loadHistory() {
       '</tr></thead><tbody>';
     rows.forEach(r => {
       h += '<tr>' +
-        '<td>' + (r.date || '-') + '</td>' +
+        '<td>' + (r.date ? String(r.date).split('T')[0] : '-') + '</td>' +
         '<td style="color:var(--green);font-weight:600">' + (r.correct || 0) + '</td>' +
         '<td style="color:#ef4444">' + (r.wrong || 0) + '</td>' +
         '<td>' + (r.accuracy || '-') + '</td>' +
