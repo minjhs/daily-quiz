@@ -47,20 +47,21 @@ input[type=text]::placeholder { color: var(--muted2); }
 .btn-primary:disabled { opacity: .4; cursor: not-allowed; }
 .btn-outline { background: transparent !important; color: var(--ink) !important; border-color: var(--ink); }
 .btn-outline:hover { background: var(--ink) !important; color: white !important; }
+.quiz-mode-row { display: flex; gap: .5rem; margin-bottom: .6rem; }
+.quiz-mode-btn { flex: 1; padding: .9rem 1rem; border: 2px solid var(--ink); border-radius: 2px; font-family: 'DM Mono', monospace; font-size: .78rem; font-weight: 500; letter-spacing: .06em; cursor: pointer; text-align: center; transition: all .15s; text-transform: uppercase; background: transparent; color: var(--ink); }
+.quiz-mode-btn.active { background: var(--ink) !important; color: white !important; }
+.quiz-mode-btn:disabled { opacity: .4; cursor: not-allowed; }
 .note { font-size: .78rem; color: var(--muted); margin-top: .8rem; line-height: 1.6; text-align: center; }
 .plays-msg { font-family: 'DM Mono', monospace; font-size: .75rem; color: var(--muted); margin-bottom: .8rem; display: none; padding: .5rem .8rem; background: var(--paper); border-left: 3px solid var(--border2); }
 .plays-msg.warn { color: var(--accent); border-left-color: var(--accent); }
-/* Google login */
 .google-login-wrap { display: flex; justify-content: center; margin-bottom: .5rem; }
 .login-or { text-align: center; font-family: 'DM Mono', monospace; font-size: .7rem; color: var(--muted2); letter-spacing: .1em; margin: .8rem 0; }
-/* 已登入狀態列 */
 .user-bar { background: var(--green-bg); border: 1px solid var(--green); border-radius: 2px; padding: .75rem 1rem; margin-bottom: 1rem; display: none; align-items: center; justify-content: space-between; gap: .8rem; }
 .user-bar-nick { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--green); font-size: 1rem; cursor: pointer; border-bottom: 1px dashed var(--green); }
 .user-bar-nick:hover { color: var(--accent); border-bottom-color: var(--accent); }
 .user-bar-hint { font-family: 'DM Mono', monospace; font-size: .65rem; color: var(--muted); margin-top: .15rem; }
 .logout-btn { font-family: 'DM Mono', monospace; font-size: .72rem; color: var(--muted); background: none; border: 1px solid var(--border2); border-radius: 2px; padding: .3rem .7rem; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
 .logout-btn:hover { color: var(--accent); border-color: var(--accent); }
-/* Modal */
 .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 200; align-items: center; justify-content: center; padding: 1rem; }
 .modal-overlay.open { display: flex; }
 .modal { background: var(--card); border: 1.5px solid var(--border); border-radius: 2px; padding: 2rem; max-width: 380px; width: 100%; box-shadow: 6px 6px 0 #c0bbb0; }
@@ -74,16 +75,17 @@ input[type=text]::placeholder { color: var(--muted2); }
 .modal-btns .btn-cancel:hover { border-color: var(--ink); color: var(--ink); }
 .modal-btns .btn-confirm { flex: 2; padding: .8rem; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: .78rem; cursor: pointer; border: 2px solid var(--ink); background: var(--ink); color: white; }
 .modal-btns .btn-confirm:hover { background: var(--accent); border-color: var(--accent); }
-/* Loading */
 .loading-state { text-align: center; padding: 3rem 1rem; color: var(--muted); font-family: 'DM Mono', monospace; font-size: .8rem; letter-spacing: .1em; }
 .loading-dots::after { content: '...'; animation: dots 1.2s steps(3,end) infinite; }
-@keyframes dots { 0%,100% { content: '.'; } 33% { content: '..'; } 66% { content: '...'; } }
-/* Quiz */
+@keyframes dots { 0%,100%{content:'.'} 33%{content:'..'} 66%{content:'...'} }
 .progress-wrap { margin-bottom: 1.8rem; }
 .progress-strip { display: flex; gap: 5px; margin-bottom: .5rem; }
 .pdot { height: 3px; flex: 1; background: var(--border); border-radius: 10px; transition: background .3s; }
 .pdot.done { background: var(--green); } .pdot.cur { background: var(--accent); }
 .q-counter { font-family: 'DM Mono', monospace; font-size: .72rem; color: var(--muted); letter-spacing: .08em; }
+.quiz-mode-tag { display: inline-block; font-family: 'DM Mono', monospace; font-size: .65rem; letter-spacing: .12em; text-transform: uppercase; padding: .2rem .7rem; border-radius: 20px; margin-bottom: .8rem; }
+.quiz-mode-tag.today { background: var(--ink); color: white; }
+.quiz-mode-tag.week { background: var(--gold); color: white; }
 .news-card { background: var(--card) !important; border: 1.5px solid var(--border); border-radius: 2px; padding: 1.6rem 1.8rem; margin-bottom: 1.3rem; box-shadow: var(--shadow); position: relative; }
 .news-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent); border-radius: 2px 0 0 2px; }
 .src-tag { font-family: 'DM Mono', monospace; font-size: .65rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: .5rem; display: flex; align-items: center; gap: .4rem; }
@@ -92,8 +94,8 @@ input[type=text]::placeholder { color: var(--muted2); }
 .news-summary { font-size: .88rem; line-height: 1.8; color: #3a3530; }
 .hl { background: #fef3c7 !important; padding: 0 3px; border-radius: 2px; font-weight: 600; color: #92400e !important; border-bottom: 2px dashed #d97706; cursor: help; font-style: italic; }
 .q-section { margin-top: 1.2rem; }
-.q-eyebrow { font-family: 'DM Mono', monospace; font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: .6rem; }
-.q-text { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; line-height: 1.45; margin-bottom: 1.1rem; color: var(--ink); }
+.q-prompt { font-family: 'DM Mono', monospace; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: .8rem; padding: .5rem .8rem; background: var(--paper); border-left: 3px solid var(--border2); }
+.q-prompt strong { color: var(--ink); font-style: italic; font-family: 'Source Serif 4', serif; font-size: .85rem; text-transform: none; letter-spacing: 0; }
 .opts { display: grid; grid-template-columns: 1fr 1fr; gap: .55rem; margin-bottom: 1rem; }
 .opt { background: white !important; color: var(--ink) !important; border: 1.5px solid var(--border2); border-radius: 2px; padding: .8rem 1rem; font-family: 'Source Serif 4', serif; font-size: .86rem; cursor: pointer; text-align: left; transition: all .12s; line-height: 1.4; }
 .opt-letter { font-family: 'DM Mono', monospace; font-size: .65rem; font-weight: 500; color: var(--muted); display: block; margin-bottom: .2rem; }
@@ -117,7 +119,6 @@ input[type=text]::placeholder { color: var(--muted2); }
 .act-next:hover { background: var(--accent) !important; border-color: var(--accent); }
 .act-zh { background: transparent !important; color: var(--gold) !important; border-color: var(--gold); }
 .act-zh:hover { background: var(--gold) !important; color: white !important; }
-/* Result */
 .result-card { background: var(--card) !important; color: var(--ink) !important; border: 1.5px solid var(--border); border-radius: 2px; padding: 3rem 2rem; box-shadow: var(--shadow); text-align: center; max-width: 520px; margin: 0 auto; }
 .r-fraction { font-family: 'Playfair Display', serif; font-size: 5rem; font-weight: 900; color: var(--accent); line-height: 1; letter-spacing: -.04em; }
 .r-eyebrow { font-family: 'DM Mono', monospace; font-size: .65rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin: .5rem 0 1rem; }
@@ -125,7 +126,6 @@ input[type=text]::placeholder { color: var(--muted2); }
 .r-sub { font-size: .88rem; color: var(--muted); margin-bottom: 1rem; }
 .streak-badge { display: inline-block; background: #fef3c7 !important; color: #92400e !important; border: 1.5px solid #d97706; border-radius: 20px; padding: .3rem 1.1rem; font-family: 'DM Mono', monospace; font-size: .78rem; margin-bottom: 1.5rem; }
 .r-status { font-family: 'DM Mono', monospace; font-size: .72rem; color: var(--muted); margin-bottom: 1.5rem; }
-/* History */
 .hist-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.3rem; }
 .close-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--muted); line-height: 1; padding: .2rem; flex-shrink: 0; }
 .close-btn:hover { color: var(--ink); }
@@ -133,14 +133,24 @@ input[type=text]::placeholder { color: var(--muted2); }
 .badge { border-radius: 3px; padding: .3rem .8rem; font-family: 'DM Mono', monospace; font-size: .75rem; border: 1px solid; }
 .badge-fire { background: #fef3c7 !important; color: #92400e !important; border-color: #d97706; }
 .badge-green { background: var(--green-bg) !important; color: var(--green) !important; border-color: var(--green); }
+.tab-row { display: flex; gap: .5rem; margin-bottom: 1.2rem; }
+.tab-btn { flex: 1; padding: .65rem .4rem; border: 2px solid var(--ink); border-radius: 2px; font-family: 'DM Mono', monospace; font-size: .72rem; letter-spacing: .04em; text-transform: uppercase; cursor: pointer; transition: all .12s; background: transparent; color: var(--ink); text-align: center; }
+.tab-btn.active { background: var(--ink) !important; color: white !important; }
 .htable { width: 100%; border-collapse: collapse; font-size: .84rem; margin-top: .8rem; }
 .htable th { padding: .55rem .5rem; border-bottom: 2px solid var(--ink); text-align: left; font-family: 'DM Mono', monospace; font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 .htable td { padding: .55rem .5rem; border-bottom: 1px solid var(--border); }
-/* Tabs */
-.tab-row { display: flex; gap: .5rem; margin-bottom: 1.2rem; }
-.tab-btn { flex: 1; padding: .7rem; border: 2px solid var(--ink); border-radius: 2px; font-family: 'DM Mono', monospace; font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; transition: all .12s; background: transparent; color: var(--ink); }
-.tab-btn.active { background: var(--ink) !important; color: white !important; }
-/* Vocab */
+.lb-range-tabs { display: flex; gap: .4rem; margin-bottom: 1rem; }
+.lb-range-btn { flex: 1; padding: .5rem .3rem; border: 1.5px solid var(--border2); border-radius: 2px; font-family: 'DM Mono', monospace; font-size: .68rem; letter-spacing: .04em; text-transform: uppercase; cursor: pointer; transition: all .12s; background: transparent; color: var(--muted); text-align: center; }
+.lb-range-btn.active { border-color: var(--ink); color: var(--ink); font-weight: 500; background: var(--paper) !important; }
+.lb-table { width: 100%; border-collapse: collapse; font-size: .84rem; margin-top: .8rem; }
+.lb-table th { padding: .5rem .4rem; border-bottom: 2px solid var(--ink); text-align: left; font-family: 'DM Mono', monospace; font-size: .6rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.lb-table td { padding: .5rem .4rem; border-bottom: 1px solid var(--border); }
+.lb-rank { font-family: 'DM Mono', monospace; font-weight: 500; color: var(--muted); font-size: .8rem; text-align: center; }
+.lb-rank.top1 { color: #b8860b; font-size: 1rem; }
+.lb-rank.top2 { color: #808080; font-size: .95rem; }
+.lb-rank.top3 { color: #8B4513; font-size: .9rem; }
+.lb-nick { font-family: 'Playfair Display', serif; font-weight: 700; }
+.lb-score { font-family: 'DM Mono', monospace; font-weight: 500; color: var(--accent); }
 .vocab-item { border-radius: 2px; padding: .9rem 1rem; margin-bottom: .7rem; font-size: .86rem; line-height: 1.85; border-left: 3px solid; }
 .vocab-item.correct { background: var(--green-bg) !important; border-color: var(--green); }
 .vocab-item.wrong { background: var(--red-bg) !important; border-color: #ef4444; }
@@ -157,18 +167,18 @@ input[type=text]::placeholder { color: var(--muted2); }
   .result-card { padding: 2rem 1.2rem; } .r-fraction { font-size: 3.8rem; }
   .act-row { flex-direction: column; } .act-btn { width: 100%; text-align: center; }
   .h-score-label { display: none; }
+  .lb-table th:nth-child(4), .lb-table td:nth-child(4) { display: none; }
 }
 @media (max-width: 380px) { .masthead { font-size: 1.15rem; } .card-title { font-size: 1.4rem; } }
 </style>
 </head>
 <body>
 
-<!-- 暱稱設定 Modal（首次登入 & 修改） -->
 <div class="modal-overlay" id="nickModal">
   <div class="modal">
     <div class="modal-eyebrow">設定暱稱</div>
     <div class="modal-title" id="nickModalTitle">歡迎！請設定你的暱稱</div>
-    <div class="modal-sub" id="nickModalSub">暱稱會顯示在排行榜和成績記錄中，之後可以隨時修改。</div>
+    <div class="modal-sub" id="nickModalSub">暱稱會顯示在排行榜和成績記錄中，之後可以點擊暱稱修改。</div>
     <input type="text" id="nickModalInput" placeholder="輸入你的暱稱..." maxlength="20">
     <div class="modal-btns">
       <button class="btn-cancel" id="nickModalCancel" onclick="closeNickModal()">取消</button>
@@ -196,9 +206,7 @@ input[type=text]::placeholder { color: var(--muted2); }
     <div class="card">
       <div class="card-eyebrow">Daily Challenge</div>
       <div class="card-title">每日新聞測驗</div>
-      <div class="card-sub">每天最多 10 次，從國際新聞學英文單字。</div>
-
-      <!-- 已登入：顯示暱稱（可點擊修改） -->
+      <div class="card-sub">從國際新聞學英文單字，每天 5 次機會。</div>
       <div id="userBar" class="user-bar">
         <div>
           <div class="user-bar-nick" id="userBarNick" onclick="openNickModal(false)"></div>
@@ -206,34 +214,30 @@ input[type=text]::placeholder { color: var(--muted2); }
         </div>
         <button class="logout-btn" onclick="googleLogout()">登出</button>
       </div>
-
-      <!-- 未登入：Google 按鈕 + 暱稱輸入 -->
       <div id="googleSection">
         <div class="google-login-wrap">
           <div id="g_id_onload"
             data-client_id="473493360870-hs3ampo7ai0cdtnsoo3erbj78h4ahqi7.apps.googleusercontent.com"
-            data-callback="handleGoogleLogin"
-            data-auto_select="false">
+            data-callback="handleGoogleLogin" data-auto_select="false">
           </div>
-          <div class="g_id_signin"
-            data-type="standard"
-            data-size="large"
-            data-theme="outline"
-            data-text="sign_in_with"
-            data-shape="rectangular"
-            data-logo_alignment="left">
+          <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline"
+            data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="left">
           </div>
         </div>
         <div class="login-or">— 或輸入暱稱（僅限單裝置） —</div>
         <label for="nicknameInput">你的暱稱</label>
         <input type="text" id="nicknameInput" placeholder="e.g. Mz, Sara, Wendy..." maxlength="20" autocomplete="off">
       </div>
-
       <div class="plays-msg" id="playsLeftMsg"></div>
-      <button class="btn btn-primary" id="startBtn" onclick="startQuiz()">開始今天的測驗 →</button>
+      <div class="quiz-mode-row">
+        <button class="quiz-mode-btn active" id="modeBtnToday" onclick="selectMode('today')">📰 今日測驗</button>
+        <button class="quiz-mode-btn" id="modeBtnWeek" onclick="selectMode('week')">📅 一週大事</button>
+      </div>
+      <button class="btn btn-primary" id="startBtn" onclick="startQuiz()">開始測驗 →</button>
       <hr class="divider">
       <button class="btn btn-outline" onclick="showVocabReview()">📖 今日學習單字</button>
       <button class="btn btn-outline" onclick="showHistory()">📊 歷史成績 & 單字</button>
+      <button class="btn btn-outline" onclick="showLeaderboard()">🏆 排行榜</button>
       <div class="note">Google 登入可跨裝置同步成績</div>
     </div>
   </div>
@@ -242,22 +246,20 @@ input[type=text]::placeholder { color: var(--muted2); }
 <!-- ② Quiz -->
 <div id="quizScreen" class="screen">
   <div class="page-wrap">
-    <div id="quizLoading" class="loading-state" style="display:none">
-      <div class="loading-dots">載入題目中</div>
-    </div>
+    <div id="quizLoading" class="loading-state" style="display:none"><div class="loading-dots">載入題目中</div></div>
     <div id="quizContent" style="display:none">
       <div class="progress-wrap">
         <div class="progress-strip" id="progressStrip"></div>
         <div class="q-counter" id="counterText"></div>
       </div>
+      <div id="quizModeTag"></div>
       <div class="news-card">
         <div class="src-tag"><span class="src-dot"></span><span id="srcTag"></span></div>
         <div class="news-title" id="newsTitle"></div>
         <div class="news-summary" id="newsSummary"></div>
       </div>
       <div class="q-section">
-        <div class="q-eyebrow">Vocabulary Challenge</div>
-        <div class="q-text" id="qText"></div>
+        <div class="q-prompt" id="qPrompt"></div>
         <div class="opts" id="optsGrid"></div>
         <div class="fb" id="fb"></div>
         <div class="zh-box" id="zhBox"></div>
@@ -290,10 +292,7 @@ input[type=text]::placeholder { color: var(--muted2); }
   <div class="center-wrap" style="max-width:600px">
     <div class="card">
       <div class="hist-header">
-        <div>
-          <div class="card-eyebrow">Records</div>
-          <div class="card-title" style="font-size:1.35rem">歷史成績 & 單字</div>
-        </div>
+        <div><div class="card-eyebrow">Records</div><div class="card-title" style="font-size:1.35rem">歷史成績 & 單字</div></div>
         <button class="close-btn" onclick="closeHistory()">✕</button>
       </div>
       <label for="histNick">輸入暱稱查詢</label>
@@ -301,7 +300,7 @@ input[type=text]::placeholder { color: var(--muted2); }
       <button class="btn btn-primary" onclick="loadHistory()">查詢 →</button>
       <div class="tab-row" style="margin-top:1rem">
         <button class="tab-btn active" id="histTabScore" onclick="switchHistTab('score')">📊 成績</button>
-        <button class="tab-btn" id="histTabVocab" onclick="switchHistTab('vocab')">📖 歷史單字</button>
+        <button class="tab-btn" id="histTabVocab" onclick="switchHistTab('vocab')">📖 單字</button>
       </div>
       <div id="histScoreContent"></div>
       <div id="histVocabContent" style="display:none"></div>
@@ -314,10 +313,7 @@ input[type=text]::placeholder { color: var(--muted2); }
   <div class="center-wrap" style="max-width:580px">
     <div class="card">
       <div class="hist-header">
-        <div>
-          <div class="card-eyebrow">Today's Words</div>
-          <div class="card-title" style="font-size:1.35rem">今日學習單字</div>
-        </div>
+        <div><div class="card-eyebrow">Today's Words</div><div class="card-title" style="font-size:1.35rem">今日學習單字</div></div>
         <button class="close-btn" onclick="closeVocabReview()">✕</button>
       </div>
       <div class="tab-row">
@@ -329,36 +325,50 @@ input[type=text]::placeholder { color: var(--muted2); }
   </div>
 </div>
 
+<!-- ⑥ Leaderboard -->
+<div id="leaderboardScreen" class="screen">
+  <div class="center-wrap" style="max-width:600px">
+    <div class="card">
+      <div class="hist-header">
+        <div><div class="card-eyebrow">Rankings</div><div class="card-title" style="font-size:1.35rem">🏆 排行榜</div></div>
+        <button class="close-btn" onclick="closeLeaderboard()">✕</button>
+      </div>
+      <div class="lb-range-tabs">
+        <button class="lb-range-btn active" id="lbBtnWeek" onclick="switchLbRange('week')">本週</button>
+        <button class="lb-range-btn" id="lbBtnMonth" onclick="switchLbRange('month')">本月</button>
+        <button class="lb-range-btn" id="lbBtnAll" onclick="switchLbRange('all')">累積</button>
+      </div>
+      <div id="lbContent"><div class="loading-state"><div class="loading-dots">載入中</div></div></div>
+    </div>
+  </div>
+</div>
+
 <script>
-const API = 'https://script.google.com/macros/s/AKfycbxgckfIKWNT_SpIvBfV7O1zkEkvADUmKfZsirXa-G8Fr9yXP--SX69Y_I5fXMzNiyOs/exec';
+const API = 'https://script.google.com/macros/s/AKfycbxg6vUz-tj1BVJS3gwgjBxyHntODNmcg3BO4zZ1q59GT2jWI8k-5ioHamcdzRI1wE5P/exec';
 const TOTAL = 5;
-const MAX_PLAYS = 10;
+const MAX_PLAYS = 5;
 
 const FALLBACK_Q = [
-  { src:"BBC News", title:"Iran's new supreme leader vows to block Strait of Hormuz", summary:"A message attributed to Mojtaba Khamenei says Iran will continue targeting American bases.", word:"attributed", category:"politics", definition:"regarded as being caused by or belonging to a particular person", question:"The summary says a message was _____ to someone. What does this word mean?", option_a:"written and confirmed by", option_b:"believed or said to come from", option_c:"denied and rejected by", option_d:"translated and edited by", correct_ans:"B", zh_word:"歸因於（attributed to）", zh_definition:"指某件事被認為是由某人所說或所做。", zh_context:"新聞說這則訊息「據稱出自」哈米尼。", zh_example:"這份聲明被歸因於該國最高領導人。" },
-  { src:"The Verge", title:"Google's TV Streamer sets new benchmark for streaming devices", summary:"The device sets a new benchmark for streaming performance, making competing products look outdated.", word:"benchmark", category:"tech", definition:"a standard or point of reference against which things may be compared", question:"The review says the device 'sets a new _____'. What does this word mean?", option_a:"physical test in a laboratory", option_b:"standard used for comparison", option_c:"price reduction for consumers", option_d:"software update by the company", correct_ans:"B", zh_word:"基準、標竿（benchmark）", zh_definition:"用來與其他事物比較的標準或參考點。", zh_context:"評測說這台裝置「樹立了新標竿」。", zh_example:"這款手機的電池續航力為業界樹立了新標竿。" },
-  { src:"Al Jazeera", title:"Oil stays above $70 as markets weigh ceasefire prospects", summary:"Energy markets remain cautiously optimistic as analysts warn that volatility could return.", word:"volatility", category:"business", definition:"liability to change rapidly and unpredictably", question:"Analysts warn that '_____ could return' to energy markets. What does this word mean?", option_a:"rapid and unpredictable change", option_b:"steady and consistent growth", option_c:"government regulation of prices", option_d:"environmental impact of energy", correct_ans:"A", zh_word:"波動性（volatility）", zh_definition:"形容某事物快速且難以預測地劇烈變化。", zh_context:"分析師警告石油市場的「波動性可能回歸」。", zh_example:"受地緣政治影響，股市近期波動性大幅上升。" },
-  { src:"BBC News", title:"China approves ethnic unity law requiring minorities to learn Mandarin", summary:"The law states that children should be taught Mandarin before kindergarten and through high school.", word:"minorities", category:"politics", definition:"groups differing in race or culture from the majority of a population", question:"The article mentions language requirements for '_____'. What does this word mean?", option_a:"groups smaller than the majority", option_b:"young children under school age", option_c:"government officials and teachers", option_d:"citizens living in rural areas", correct_ans:"A", zh_word:"少數群體（minorities）", zh_definition:"在人口中與多數群體在種族或文化上不同的群體。", zh_context:"法律要求少數民族兒童在幼兒園前就需學習普通話。", zh_example:"許多國家制定政策保護語言少數群體的文化權利。" },
-  { src:"NPR", title:"Scientists warn of accelerating glacial retreat worldwide", summary:"Researchers say glaciers are retreating at unprecedented rates with profound implications.", word:"unprecedented", category:"news", definition:"never done or known before; without previous example", question:"Glaciers are retreating at '_____ rates'. What does this word mean?", option_a:"never seen before", option_b:"extremely slow and gradual", option_c:"well-documented historically", option_d:"carefully measured and predicted", correct_ans:"A", zh_word:"史無前例的（unprecedented）", zh_definition:"從未發生過或見過的；沒有先例的。", zh_context:"研究人員說冰川正以「史無前例的」速度退縮。", zh_example:"這場颶風造成了史無前例的破壞。" }
+  { src:"BBC News", title:"Iran's new supreme leader vows to block Strait of Hormuz", summary:"A message attributed to Mojtaba Khamenei says Iran will continue targeting American bases.", word:"attributed", category:"politics", definition:"regarded as being caused by or belonging to a particular person", option_a:"believed or said to come from someone", option_b:"written and officially signed by", option_c:"denied and strongly rejected by", option_d:"translated and changed in meaning", correct_ans:"A", zh_word:"attributed（歸因於）", zh_definition:"指某件事被認為是由某人所說或所做。", zh_context:"這則訊息被_____哈米尼。", zh_example:"This discovery was attributed to a young scientist. （這項發現被歸功於一位年輕科學家。）" },
+  { src:"The Verge", title:"Google's TV Streamer sets new benchmark for streaming devices", summary:"The device sets a new benchmark for streaming performance, making competing products look outdated.", word:"benchmark", category:"tech", definition:"a standard used to measure or compare things", option_a:"a standard used to measure or compare", option_b:"a type of physical hardware test", option_c:"a sudden drop in product price", option_d:"a software update from the company", correct_ans:"A", zh_word:"benchmark（基準、標竿）", zh_definition:"用來與其他事物比較的標準或參考點。", zh_context:"這台裝置為串流效能樹立了新的_____。", zh_example:"The new phone set a benchmark for battery life. （這款新手機為電池續航力樹立了標竿。）" },
+  { src:"Al Jazeera", title:"Oil stays above $70 as markets weigh ceasefire prospects", summary:"Energy markets remain cautiously optimistic as analysts warn that volatility could return.", word:"volatility", category:"business", definition:"a tendency to change rapidly and unpredictably", option_a:"a tendency to change rapidly and unpredictably", option_b:"a steady and consistent pattern of growth", option_c:"strict government control over pricing", option_d:"the environmental cost of energy production", correct_ans:"A", zh_word:"volatility（波動性）", zh_definition:"形容某事物快速且難以預測地劇烈變化。", zh_context:"分析師警告市場的_____可能回歸。", zh_example:"The stock market showed high volatility after the news. （新聞發布後，股市出現高度波動。）" },
+  { src:"BBC News", title:"China approves ethnic unity law requiring minorities to learn Mandarin", summary:"The law states that children should be taught Mandarin before kindergarten and through high school.", word:"minorities", category:"politics", definition:"groups that differ in race or culture from the majority", option_a:"groups that differ in race or culture from the majority", option_b:"young children who have not yet started school", option_c:"government workers responsible for education", option_d:"people who live in remote rural areas", correct_ans:"A", zh_word:"minorities（少數群體）", zh_definition:"在人口中與多數群體在種族或文化上不同的群體。", zh_context:"法律要求_____兒童在幼兒園前就需學習普通話。", zh_example:"The government introduced policies to protect the rights of minorities. （政府推出政策保護少數群體的權利。）" },
+  { src:"NPR", title:"Scientists warn of accelerating glacial retreat worldwide", summary:"Researchers say glaciers are retreating at unprecedented rates with profound implications for water supply.", word:"unprecedented", category:"news", definition:"never seen or experienced before", option_a:"never seen or experienced before", option_b:"extremely slow and difficult to measure", option_c:"well-documented throughout history", option_d:"carefully predicted by scientists in advance", correct_ans:"A", zh_word:"unprecedented（史無前例的）", zh_definition:"從未發生過或見過的；沒有先例的。", zh_context:"冰川正以_____的速度退縮。", zh_example:"The storm caused unprecedented damage to the coastal city. （這場風暴對沿海城市造成了史無前例的破壞。）" }
 ];
 
-// ── state ──
 let cur=0, score=0, didAnswer=false, lockedIdx=0;
 let nick='', uid='', wordLog=[], sessionPool=[];
-let googleUser=null;
-let _vocabLog=[];
+let googleUser=null, _vocabLog=[];
 let _histScoreData=null, _histVocabData=null;
 let _nickModalIsFirst=true;
+let _lbRange='week', _lbCache={};
+let _quizMode='today';
 
-// ── helpers ──
-const getToday = () => new Date().toISOString().split('T')[0];
-const getSavedNick = () => localStorage.getItem('quiz_nick')||'';
-const setSavedNick = n => localStorage.setItem('quiz_nick', n);
-const getPlaysToday = u => parseInt(localStorage.getItem('quiz_plays_'+u+'_'+getToday())||'0',10);
-const incPlays = u => localStorage.setItem('quiz_plays_'+u+'_'+getToday(), getPlaysToday(u)+1);
-
-function getMasteredToday(u){try{return JSON.parse(localStorage.getItem('quiz_mastered_'+u+'_'+getToday())||'[]');}catch(e){return[];}}
-function addMastered(u,words){const m=getMasteredToday(u);words.forEach(w=>{if(!m.includes(w))m.push(w);});localStorage.setItem('quiz_mastered_'+u+'_'+getToday(),JSON.stringify(m));}
+const getToday=()=>new Date().toISOString().split('T')[0];
+const getSavedNick=()=>localStorage.getItem('quiz_nick')||'';
+const setSavedNick=n=>localStorage.setItem('quiz_nick',n);
+const getPlaysToday=u=>parseInt(localStorage.getItem('quiz_plays_'+u+'_'+getToday())||'0',10);
+const incPlays=u=>localStorage.setItem('quiz_plays_'+u+'_'+getToday(),getPlaysToday(u)+1);
 function getTodayVocabLog(u){try{return JSON.parse(localStorage.getItem('quiz_vocablog_'+u+'_'+getToday())||'[]');}catch(e){return[];}}
 function appendTodayVocabLog(u,words){
   const log=getTodayVocabLog(u);
@@ -366,7 +376,6 @@ function appendTodayVocabLog(u,words){
   localStorage.setItem('quiz_vocablog_'+u+'_'+getToday(),JSON.stringify(log));
 }
 function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-
 function apiJsonp(params){
   return new Promise((resolve,reject)=>{
     const cb='_cb'+Date.now()+Math.random().toString(36).slice(2);
@@ -379,102 +388,89 @@ function apiJsonp(params){
     s.src=url;document.head.appendChild(s);
   });
 }
-
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
 
-// ── Nick Modal ──
-function openNickModal(isFirst) {
-  _nickModalIsFirst = isFirst;
-  const cancelBtn = document.getElementById('nickModalCancel');
-  if (isFirst) {
-    document.getElementById('nickModalTitle').textContent = '歡迎！請設定你的暱稱';
-    document.getElementById('nickModalSub').textContent = '暱稱會顯示在成績記錄中，之後可以點擊暱稱修改。';
-    cancelBtn.style.display = 'none';
-    document.getElementById('nickModalInput').value = '';
+function selectMode(mode){
+  _quizMode=mode;
+  document.getElementById('modeBtnToday').className='quiz-mode-btn'+(mode==='today'?' active':'');
+  document.getElementById('modeBtnWeek').className='quiz-mode-btn'+(mode==='week'?' active':'');
+}
+
+function openNickModal(isFirst){
+  _nickModalIsFirst=isFirst;
+  const cancelBtn=document.getElementById('nickModalCancel');
+  if(isFirst){
+    document.getElementById('nickModalTitle').textContent='歡迎！請設定你的暱稱';
+    document.getElementById('nickModalSub').textContent='暱稱會顯示在排行榜和成績記錄中，之後可以點擊暱稱修改。';
+    cancelBtn.style.display='none';
+    document.getElementById('nickModalInput').value='';
   } else {
-    document.getElementById('nickModalTitle').textContent = '修改暱稱';
-    document.getElementById('nickModalSub').textContent = '輸入新的暱稱。';
-    cancelBtn.style.display = 'block';
-    document.getElementById('nickModalInput').value = nick;
+    document.getElementById('nickModalTitle').textContent='修改暱稱';
+    document.getElementById('nickModalSub').textContent='輸入新的暱稱。';
+    cancelBtn.style.display='block';
+    document.getElementById('nickModalInput').value=nick;
   }
   document.getElementById('nickModal').classList.add('open');
-  setTimeout(()=>document.getElementById('nickModalInput').focus(), 100);
+  setTimeout(()=>document.getElementById('nickModalInput').focus(),100);
 }
+function closeNickModal(){if(_nickModalIsFirst)return;document.getElementById('nickModal').classList.remove('open');}
 
-function closeNickModal(){
-  if (_nickModalIsFirst) return; // 首次登入不能取消
+window.saveNick=async function(){
+  const newNick=document.getElementById('nickModalInput').value.trim();
+  if(!newNick){document.getElementById('nickModalInput').focus();return;}
   document.getElementById('nickModal').classList.remove('open');
-}
-
-async function saveNick() {
-  const newNick = document.getElementById('nickModalInput').value.trim();
-  if (!newNick) { document.getElementById('nickModalInput').focus(); return; }
-  document.getElementById('nickModal').classList.remove('open');
-  nick = newNick;
-  if (googleUser) {
-    googleUser.nickname = newNick;
-    localStorage.setItem('quiz_google_user', JSON.stringify(googleUser));
-    document.getElementById('userBarNick').textContent = newNick;
-    try { await apiJsonp({action:'updateNick', user_id:uid, nickname:newNick}); } catch(e) {}
+  nick=newNick;
+  if(googleUser){
+    googleUser.nickname=newNick;
+    localStorage.setItem('quiz_google_user',JSON.stringify(googleUser));
+    try{await apiJsonp({action:'updateNick',user_id:'g_'+googleUser.id,nickname:newNick});}catch(e){}
+    applyGoogleUser();
   } else {
     setSavedNick(newNick);
-    document.getElementById('nicknameInput').value = newNick;
+    document.getElementById('nicknameInput').value=newNick;
+    updateHeader(newNick);
+    refreshLoginState(newNick);
   }
-  updateHeader(newNick);
-  refreshLoginState(newNick);
-}
+};
 
-// ── Google Login ──
 function parseJwt(token){
   const b64=token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');
   return JSON.parse(decodeURIComponent(atob(b64).split('').map(c=>'%'+('00'+c.charCodeAt(0).toString(16)).slice(-2)).join('')));
 }
-
-async function handleGoogleLogin(response) {
-  const payload = parseJwt(response.credential);
-  googleUser = { id: payload.sub, name: payload.name, email: payload.email };
-  const gUid = 'g_' + googleUser.id;
-  try {
-    const r = await apiJsonp({action:'saveUser', user_id:gUid, nickname:'', email:googleUser.email});
-    if (r.success) {
-      googleUser.nickname = r.nickname || '';
-      uid = gUid;
-      if (!r.nickname || r.nickname === '') {
-        // 新用戶，跳出暱稱設定彈窗
-        localStorage.setItem('quiz_google_user', JSON.stringify(googleUser));
+async function handleGoogleLogin(response){
+  const payload=parseJwt(response.credential);
+  googleUser={id:payload.sub,name:payload.name,email:payload.email};
+  const gUid='g_'+googleUser.id;
+  try{
+    const r=await apiJsonp({action:'saveUser',user_id:gUid,nickname:'',email:googleUser.email});
+    if(r.success){
+      googleUser.nickname=r.nickname||'';uid=gUid;
+      if(!r.nickname||r.nickname===''){
+        localStorage.setItem('quiz_google_user',JSON.stringify(googleUser));
         openNickModal(true);
-        // 等使用者填完暱稱後 saveNick() 會繼續
-        // 預先設定 uid 讓 saveNick 能用
       } else {
-        // 舊用戶，直接套用
-        nick = googleUser.nickname;
-        localStorage.setItem('quiz_google_user', JSON.stringify(googleUser));
+        nick=googleUser.nickname;
+        localStorage.setItem('quiz_google_user',JSON.stringify(googleUser));
         applyGoogleUser();
       }
     }
-  } catch(e) {
-    googleUser.nickname = googleUser.name;
-    nick = googleUser.name;
-    uid = gUid;
-    localStorage.setItem('quiz_google_user', JSON.stringify(googleUser));
+  }catch(e){
+    googleUser.nickname=googleUser.name;nick=googleUser.name;uid=gUid;
+    localStorage.setItem('quiz_google_user',JSON.stringify(googleUser));
     applyGoogleUser();
   }
 }
-
-function applyGoogleUser() {
-  if (!googleUser) return;
-  uid = 'g_' + googleUser.id;
-  nick = googleUser.nickname || googleUser.name;
-  document.getElementById('userBarNick').textContent = nick;
-  document.getElementById('userBar').style.display = 'flex';
-  document.getElementById('googleSection').style.display = 'none';
-  refreshLoginState(nick);
-  updateHeader(nick);
+function applyGoogleUser(){
+  if(!googleUser)return;
+  uid='g_'+googleUser.id;nick=googleUser.nickname||googleUser.name;
+  document.getElementById('userBarNick').textContent=nick;
+  document.getElementById('userBar').style.display='flex';
+  document.getElementById('googleSection').style.display='none';
+  refreshLoginState(nick);updateHeader(nick);
 }
-
-function googleLogout() {
-  googleUser=null; localStorage.removeItem('quiz_google_user');
-  uid=''; nick='';
+function googleLogout(){
+  googleUser=null;localStorage.removeItem('quiz_google_user');
+  uid='';nick='';
   document.getElementById('userBar').style.display='none';
   document.getElementById('googleSection').style.display='block';
   document.getElementById('nicknameInput').value='';
@@ -484,118 +480,109 @@ function googleLogout() {
   document.getElementById('scoreDisplay').textContent='—';
 }
 
-// ── saveNick override for first-time flow ──
-// 覆寫讓首次設定暱稱後自動 applyGoogleUser
-const _origSaveNick = saveNick;
-window.saveNick = async function() {
-  const newNick = document.getElementById('nickModalInput').value.trim();
-  if (!newNick) { document.getElementById('nickModalInput').focus(); return; }
-  document.getElementById('nickModal').classList.remove('open');
-  nick = newNick;
-  if (googleUser) {
-    googleUser.nickname = newNick;
-    localStorage.setItem('quiz_google_user', JSON.stringify(googleUser));
-    try { await apiJsonp({action:'updateNick', user_id:'g_'+googleUser.id, nickname:newNick}); } catch(e) {}
-    applyGoogleUser();
-  } else {
-    setSavedNick(newNick);
-    document.getElementById('nicknameInput').value = newNick;
-    updateHeader(newNick);
-    refreshLoginState(newNick);
-  }
-};
-
-// ── init ──
-window.addEventListener('DOMContentLoaded', () => {
-  const savedGoogle = localStorage.getItem('quiz_google_user');
-  if (savedGoogle) {
-    try { googleUser = JSON.parse(savedGoogle); applyGoogleUser(); } catch(e) {}
-  } else {
-    const saved = getSavedNick();
-    if (saved) { document.getElementById('nicknameInput').value=saved; refreshLoginState(saved); updateHeader(saved); }
-  }
-  const ni = document.getElementById('nicknameInput');
-  ni.addEventListener('input', e => { const v=e.target.value.trim(); if (!googleUser){ refreshLoginState(v); if(v) updateHeader(v); } });
-  ni.addEventListener('keydown', e => { if(e.key==='Enter') startQuiz(); });
-  document.getElementById('nickModal').addEventListener('keydown', e => {
-    if (e.key==='Enter') window.saveNick();
-    if (e.key==='Escape' && !_nickModalIsFirst) closeNickModal();
+window.addEventListener('DOMContentLoaded',()=>{
+  const savedGoogle=localStorage.getItem('quiz_google_user');
+  if(savedGoogle){try{googleUser=JSON.parse(savedGoogle);applyGoogleUser();}catch(e){}}
+  else{const saved=getSavedNick();if(saved){document.getElementById('nicknameInput').value=saved;refreshLoginState(saved);updateHeader(saved);}}
+  const ni=document.getElementById('nicknameInput');
+  ni.addEventListener('input',e=>{const v=e.target.value.trim();if(!googleUser){refreshLoginState(v);if(v)updateHeader(v);}});
+  ni.addEventListener('keydown',e=>{if(e.key==='Enter')startQuiz();});
+  document.getElementById('nickModal').addEventListener('keydown',e=>{
+    if(e.key==='Enter')window.saveNick();
+    if(e.key==='Escape'&&!_nickModalIsFirst)closeNickModal();
   });
 });
 
-function refreshLoginState(v) {
-  const msg=document.getElementById('playsLeftMsg'), btn=document.getElementById('startBtn');
-  if (!v&&!uid){msg.style.display='none';btn.disabled=false;return;}
+function refreshLoginState(v){
+  const msg=document.getElementById('playsLeftMsg'),btn=document.getElementById('startBtn');
+  const mToday=document.getElementById('modeBtnToday'),mWeek=document.getElementById('modeBtnWeek');
+  if(!v&&!uid){msg.style.display='none';btn.disabled=false;mToday.disabled=false;mWeek.disabled=false;return;}
   const u=uid||v.toLowerCase().replace(/\s+/g,'_');
-  const plays=getPlaysToday(u), left=MAX_PLAYS-plays;
+  const plays=getPlaysToday(u),left=MAX_PLAYS-plays;
   msg.style.display='block';
-  if(left<=0){msg.textContent='⛔ 今天已達上限（10/10），明天再來！';msg.className='plays-msg warn';btn.disabled=true;}
-  else{msg.textContent='今天已玩 '+plays+' 次，剩餘 '+left+' 次';msg.className='plays-msg';btn.disabled=false;}
+  if(left<=0){
+    msg.textContent='⛔ 今天已達上限（5/5），明天再來！';msg.className='plays-msg warn';
+    btn.disabled=true;mToday.disabled=true;mWeek.disabled=true;
+  } else {
+    msg.textContent='今天已完成 '+plays+' 次，剩餘 '+left+' 次';msg.className='plays-msg';
+    btn.disabled=false;mToday.disabled=false;mWeek.disabled=false;
+  }
 }
-
-function updateHeader(v) {
+function updateHeader(v){
   if(!v)return;
-  const u=uid||v.toLowerCase().replace(/\s+/g,'_'), left=MAX_PLAYS-getPlaysToday(u);
-  const hn=document.getElementById('hNick'), hp=document.getElementById('hPlays');
-  hn.textContent=v; hn.style.display='inline';
-  hp.textContent='剩 '+left+' 次'; hp.style.display='inline';
-  hp.style.color=left<=2?'var(--accent)':'var(--muted)';
+  const u=uid||v.toLowerCase().replace(/\s+/g,'_'),left=MAX_PLAYS-getPlaysToday(u);
+  const hn=document.getElementById('hNick'),hp=document.getElementById('hPlays');
+  hn.textContent=v;hn.style.display='inline';
+  hp.textContent='剩 '+left+' 次';hp.style.display='inline';
+  hp.style.color=left<=1?'var(--accent)':'var(--muted)';
 }
 
-function normalizeQ(raw) {
-  return {
-    src:raw.source||raw.src||'News', title:raw.title||'', summary:raw.summary||'',
-    word:raw.word||'', cat:raw.category||raw.cat||'news',
-    def:raw.definition||raw.def||'', q:raw.question||raw.q||'',
+function normalizeQ(raw){
+  return{
+    src:raw.source||raw.src||'News',title:raw.title||'',summary:raw.summary||'',
+    word:raw.word||'',cat:raw.category||raw.cat||'news',
+    def:raw.definition||raw.def||'',
     opts:[raw.option_a,raw.option_b,raw.option_c,raw.option_d],
     ans:['A','B','C','D'].indexOf((raw.correct_ans||'A').toUpperCase()),
-    zh:{w:raw.zh_word||raw.zh?.w||'',d:raw.zh_definition||raw.zh?.d||'',c:raw.zh_context||raw.zh?.c||'',e:raw.zh_example||raw.zh?.e||''}
+    zh:{w:raw.zh_word||'',d:raw.zh_definition||'',c:raw.zh_context||'',e:raw.zh_example||''}
   };
 }
 
-async function startQuiz() {
+async function startQuiz(){
   const v=document.getElementById('nicknameInput').value.trim();
   if(!uid&&!v){alert('請輸入暱稱或使用 Google 登入！');return;}
   if(!uid){uid=v.toLowerCase().replace(/\s+/g,'_');nick=v;setSavedNick(v);}
-  if(getPlaysToday(uid)>=MAX_PLAYS){alert('今天已達上限 10 次，明天再來！');return;}
-  incPlays(uid);
+  // ── 只檢查是否超過上限，不在這裡扣次數 ──
+  if(getPlaysToday(uid)>=MAX_PLAYS){alert('今天已達上限 5 次，明天再來！');return;}
+
   document.getElementById('scoreDisplay').textContent='0';
-  updateHeader(nick); wordLog=[];cur=0;score=0;didAnswer=false;
+  updateHeader(nick);wordLog=[];cur=0;score=0;didAnswer=false;
   show('quizScreen');
   document.getElementById('quizLoading').style.display='block';
   document.getElementById('quizContent').style.display='none';
-  try {
-    const res=await apiJsonp({action:'getQuestions',user_id:uid,limit:TOTAL});
+
+  const modeTag=document.getElementById('quizModeTag');
+  modeTag.innerHTML='<span class="quiz-mode-tag '+_quizMode+'">'+(_quizMode==='today'?'📰 今日測驗':'📅 一週大事')+'</span>';
+
+  try{
+    const res=await apiJsonp({action:'getQuestions',mode:_quizMode,limit:TOTAL});
     if(res.success&&res.data&&res.data.length>=TOTAL){
       sessionPool=shuffle(res.data).slice(0,TOTAL).map(normalizeQ);
-    } else { throw new Error('題目不足'); }
-  } catch(e) {
-    const mastered=getMasteredToday(uid);
-    let pool=FALLBACK_Q.filter(q=>!mastered.includes(q.word));
-    if(pool.length<TOTAL)pool=[...pool,...FALLBACK_Q.filter(q=>mastered.includes(q.word))];
-    sessionPool=shuffle(pool).slice(0,TOTAL).map(normalizeQ);
+    } else if(res.success&&res.data&&res.data.length>0){
+      sessionPool=shuffle(res.data).map(normalizeQ);
+    } else throw new Error('題目不足');
+  }catch(e){
+    sessionPool=shuffle(FALLBACK_Q).slice(0,TOTAL).map(normalizeQ);
   }
   document.getElementById('quizLoading').style.display='none';
   document.getElementById('quizContent').style.display='block';
-  buildProgress(); loadQ();
+  buildProgress();loadQ();
 }
 
 function buildProgress(){
   const s=document.getElementById('progressStrip');s.innerHTML='';
-  for(let i=0;i<TOTAL;i++){const d=document.createElement('div');d.className='pdot'+(i===cur?' cur':i<cur?' done':'');d.id='pd'+i;s.appendChild(d);}
+  for(let i=0;i<sessionPool.length;i++){
+    const d=document.createElement('div');
+    d.className='pdot'+(i===cur?' cur':i<cur?' done':'');
+    d.id='pd'+i;s.appendChild(d);
+  }
 }
 
 const LETTERS=['A','B','C','D'];
-
 function loadQ(){
   const q=sessionPool[cur];didAnswer=false;
-  document.getElementById('counterText').textContent='Question '+(cur+1)+' of '+TOTAL;
+  document.getElementById('counterText').textContent='Question '+(cur+1)+' of '+sessionPool.length;
   document.getElementById('srcTag').textContent=q.src;
   document.getElementById('newsTitle').textContent=q.title;
-  document.getElementById('newsSummary').innerHTML=q.summary.replace(new RegExp('\\b'+q.word+'\\b','gi'),'<span class="hl" title="'+q.def+'">$&</span>');
-  document.getElementById('qText').textContent=q.q;
+  document.getElementById('newsSummary').innerHTML=q.summary.replace(
+    new RegExp('\\b'+q.word+'\\b','gi'),
+    '<span class="hl" title="'+q.def+'">$&</span>'
+  );
+  document.getElementById('qPrompt').innerHTML='What does <strong>'+q.word+'</strong> most likely mean?';
   const grid=document.getElementById('optsGrid');grid.innerHTML='';
-  const idxs=shuffle([0,1,2,3]);const newAns=idxs.indexOf(q.ans);q._sa=newAns;
+  const validOpts=q.opts.filter(Boolean);
+  const idxs=shuffle([...Array(validOpts.length).keys()]);
+  const newAns=idxs.indexOf(q.ans);q._sa=newAns;
   idxs.map(i=>q.opts[i]).forEach((o,i)=>{
     const b=document.createElement('button');b.className='opt';
     b.innerHTML='<span class="opt-letter">'+LETTERS[i]+'</span>'+(o||'');
@@ -632,25 +619,29 @@ function showZh(){
 
 function nextQ(){
   cur++;
-  if(cur>=TOTAL)showResult();
+  if(cur>=sessionPool.length)showResult();
   else{document.getElementById('pd'+cur).className='pdot cur';loadQ();window.scrollTo(0,0);}
 }
 
 async function showResult(){
-  const correctWords=wordLog.filter(x=>x.correct).map(x=>x.word);
-  addMastered(uid,correctWords);appendTodayVocabLog(uid,wordLog);show('resultScreen');
-  const pct=Math.round(score/TOTAL*100);
-  document.getElementById('rGrade').textContent=score+'/'+TOTAL;
+  // ── 完成5題才扣一次次數 ──
+  incPlays(uid);
+  updateHeader(nick);
+  appendTodayVocabLog(uid,wordLog);
+  show('resultScreen');
+  const pct=Math.round(score/sessionPool.length*100);
+  document.getElementById('rGrade').textContent=score+'/'+sessionPool.length;
   const msgs=['繼續加油！','繼續努力！','還不錯喔！','表現良好！','非常優秀！','完美表現！'];
   document.getElementById('rMsg').textContent=msgs[score]||'Great Job!';
   document.getElementById('rSub').textContent='正確率 '+pct+'%';
   document.getElementById('rStatus').textContent='儲存中...';
-  try {
-    const r=await apiJsonp({action:'saveScore',user_id:uid,nickname:nick,correct:score,wrong:TOTAL-score,total_questions:TOTAL});
+  try{
+    const r=await apiJsonp({action:'saveScore',user_id:uid,nickname:nick,correct:score,wrong:sessionPool.length-score,total_questions:sessionPool.length});
     document.getElementById('rStreak').textContent='🔥 連續 '+(r.streak||1)+' 天';
     apiJsonp({action:'saveVocab',user_id:uid,words:JSON.stringify(wordLog.map(x=>({word:x.word,word_zh:x.word_zh,category:x.category,correct:x.correct})))}).catch(()=>{});
     document.getElementById('rStatus').textContent='✓ 分數已儲存';
-  } catch(e){document.getElementById('rStatus').textContent='（離線模式，分數未儲存）';}
+    _lbCache={};
+  }catch(e){document.getElementById('rStatus').textContent='（離線模式，分數未儲存）';}
 }
 
 function goHome(){
@@ -660,14 +651,62 @@ function goHome(){
   show('loginScreen');
 }
 
-// ── Today Vocab ──
+function showLeaderboard(){
+  show('leaderboardScreen');
+  _lbRange='week';
+  ['Week','Month','All'].forEach(r=>document.getElementById('lbBtn'+r).className='lb-range-btn'+(r==='Week'?' active':''));
+  loadLeaderboard('week');
+}
+function closeLeaderboard(){show('loginScreen');}
+function switchLbRange(range){
+  _lbRange=range;
+  const cap=range.charAt(0).toUpperCase()+range.slice(1);
+  ['Week','Month','All'].forEach(r=>document.getElementById('lbBtn'+r).className='lb-range-btn'+(r===cap?' active':''));
+  loadLeaderboard(range);
+}
+async function loadLeaderboard(range){
+  if(_lbCache[range]){renderLeaderboard(_lbCache[range],range);return;}
+  document.getElementById('lbContent').innerHTML='<div class="loading-state"><div class="loading-dots">載入中</div></div>';
+  try{
+    const data=await apiJsonp({action:'getLeaderboard',range:range});
+    if(data.success){_lbCache[range]=data.data;renderLeaderboard(data.data,range);}
+    else document.getElementById('lbContent').innerHTML='<p style="color:var(--muted);font-size:.88rem;margin-top:.8rem">暫無資料</p>';
+  }catch(e){
+    document.getElementById('lbContent').innerHTML='<p style="color:var(--accent);font-size:.88rem;margin-top:.8rem">載入失敗：'+e.message+'</p>';
+  }
+}
+function renderLeaderboard(data,range){
+  const box=document.getElementById('lbContent');
+  if(!data||!data.length){box.innerHTML='<p style="color:var(--muted);font-size:.88rem;margin-top:.8rem">暫無排行資料。</p>';return;}
+  const medals=['🥇','🥈','🥉'];
+  const rangeLabel={'week':'本週','month':'本月','all':'累積'}[range]||'';
+  let h='<div style="font-family:\'DM Mono\',monospace;font-size:.7rem;color:var(--muted);margin-bottom:.8rem">'+rangeLabel+'前 '+data.length+' 名</div>';
+  h+='<table class="lb-table"><thead><tr><th style="text-align:center;width:2rem">#</th><th>暱稱</th><th style="text-align:right">總分</th><th style="text-align:right">正確率</th><th style="text-align:right">連續</th></tr></thead><tbody>';
+  data.forEach((r,i)=>{
+    const rankDisp=i<3?medals[i]:(i+1);
+    const rankClass=i===0?'top1':i===1?'top2':i===2?'top3':'';
+    const isMe=nick&&r.nickname===nick;
+    const rowStyle=isMe?'background:var(--green-bg)!important;':'';
+    h+='<tr style="'+rowStyle+'">'+
+      '<td class="lb-rank '+rankClass+'" style="text-align:center">'+rankDisp+'</td>'+
+      '<td class="lb-nick">'+(isMe?'<span style="color:var(--green)">'+r.nickname+' ✓</span>':r.nickname)+'</td>'+
+      '<td class="lb-score" style="text-align:right">'+r.total_correct+'</td>'+
+      '<td style="text-align:right;font-family:\'DM Mono\',monospace;font-size:.8rem;color:var(--muted)">'+r.accuracy+'</td>'+
+      '<td style="text-align:right;font-family:\'DM Mono\',monospace;font-size:.8rem;color:var(--muted)">'+(r.streak>0?'🔥'+r.streak:'—')+'</td>'+
+      '</tr>';
+  });
+  h+='</tbody></table>';
+  if(nick&&data.findIndex(r=>r.nickname===nick)===-1){
+    h+='<p style="font-family:\'DM Mono\',monospace;font-size:.72rem;color:var(--muted);margin-top:.8rem;text-align:center">你還沒有進入前 20 名</p>';
+  }
+  box.innerHTML=h;
+}
+
 function showVocabReview(){
   const u=uid||(document.getElementById('nicknameInput').value.trim().toLowerCase().replace(/\s+/g,'_'));
   _vocabLog=u?getTodayVocabLog(u):[];
-  switchVocabTab('wrong');
-  show('vocabScreen');
+  switchVocabTab('wrong');show('vocabScreen');
 }
-
 function switchVocabTab(tab){
   document.getElementById('tabWrong').className='tab-btn'+(tab==='wrong'?' active':'');
   document.getElementById('tabCorrect').className='tab-btn'+(tab==='correct'?' active':'');
@@ -680,19 +719,16 @@ function switchVocabTab(tab){
     box.innerHTML=items.length?items.map(i=>vocabCard(i,true)).join(''):'<p style="color:var(--muted);font-size:.9rem;margin-top:.8rem">今天還沒有答對的題目。</p>';
   }
 }
-
 function vocabCard(item,ok){
   const zh=item.zh||{};
-  return '<div class="vocab-item '+(ok?'correct':'wrong')+'">' +
-    '<div class="vocab-headword">'+item.word+'</div>' +
-    '<div><b>中文：</b>'+(zh.w||item.word_zh||'—')+'</div>' +
-    '<div><b>定義：</b>'+(zh.d||'—')+'</div>' +
+  return '<div class="vocab-item '+(ok?'correct':'wrong')+'">'+
+    '<div class="vocab-headword">'+item.word+'</div>'+
+    '<div><b>中文：</b>'+(zh.w||item.word_zh||'—')+'</div>'+
+    '<div><b>定義：</b>'+(zh.d||'—')+'</div>'+
     '<div><b>例句：</b><em>'+(zh.e||'—')+'</em></div></div>';
 }
-
 function closeVocabReview(){show('loginScreen');}
 
-// ── History ──
 function showHistory(){
   const v=document.getElementById('nicknameInput').value.trim();
   const displayNick=nick||v;
@@ -700,13 +736,10 @@ function showHistory(){
   document.getElementById('histScoreContent').innerHTML='';
   document.getElementById('histVocabContent').innerHTML='';
   _histScoreData=null;_histVocabData=null;
-  switchHistTab('score');
-  show('historyScreen');
+  switchHistTab('score');show('historyScreen');
   if(displayNick)loadHistory();
 }
-
 function closeHistory(){show('loginScreen');}
-
 function switchHistTab(tab){
   document.getElementById('histTabScore').className='tab-btn'+(tab==='score'?' active':'');
   document.getElementById('histTabVocab').className='tab-btn'+(tab==='vocab'?' active':'');
@@ -714,14 +747,13 @@ function switchHistTab(tab){
   document.getElementById('histVocabContent').style.display=tab==='vocab'?'block':'none';
   if(tab==='vocab'&&_histVocabData)renderHistVocab(_histVocabData);
 }
-
 async function loadHistory(){
   const v=document.getElementById('histNick').value.trim();
   if(!v){alert('請輸入暱稱');return;}
   const huid=(googleUser&&(nick===v||googleUser.name===v))?uid:v.toLowerCase().replace(/\s+/g,'_');
   const sbox=document.getElementById('histScoreContent');
   sbox.innerHTML='<p style="color:var(--muted);font-size:.85rem;margin-top:.8rem;font-family:\'DM Mono\',monospace">載入中...</p>';
-  try {
+  try{
     const [scoreData,vocabData]=await Promise.all([
       apiJsonp({action:'getScores',user_id:huid}),
       apiJsonp({action:'getVocab',user_id:huid})
@@ -729,16 +761,15 @@ async function loadHistory(){
     _histScoreData=scoreData;_histVocabData=vocabData;
     renderHistScore(scoreData);
     if(!document.getElementById('histTabScore').classList.contains('active'))renderHistVocab(vocabData);
-  } catch(e){
+  }catch(e){
     sbox.innerHTML='<p style="color:var(--accent);font-size:.88rem;margin-top:.8rem">載入失敗：'+e.message+'</p>';
   }
 }
-
 function renderHistScore(data){
   const box=document.getElementById('histScoreContent');
   if(!data.success||!data.data||!data.data.length){box.innerHTML='<p style="color:var(--muted);font-size:.88rem;margin-top:.8rem">查無紀錄！</p>';return;}
   const rows=data.data.slice().reverse(),streak=data.streak||0;
-  let h='<div class="badges"><span class="badge badge-fire">🔥 連續 '+streak+' 天</span><span class="badge badge-green">📅 共 '+rows.length+' 筆</span></div>' +
+  let h='<div class="badges"><span class="badge badge-fire">🔥 連續 '+streak+' 天</span><span class="badge badge-green">📅 共 '+rows.length+' 筆</span></div>'+
     '<table class="htable"><thead><tr><th>日期</th><th>正確</th><th>錯誤</th><th>正確率</th></tr></thead><tbody>';
   rows.forEach(r=>{
     const d=r.date?String(r.date).split('T')[0]:'-';
@@ -746,7 +777,6 @@ function renderHistScore(data){
   });
   box.innerHTML=h+'</tbody></table>';
 }
-
 function renderHistVocab(data){
   const box=document.getElementById('histVocabContent');
   if(!data.success||!data.data||!data.data.length){box.innerHTML='<p style="color:var(--muted);font-size:.88rem;margin-top:.8rem">查無單字紀錄。</p>';return;}
@@ -756,11 +786,7 @@ function renderHistVocab(data){
   let h='<div class="badges"><span class="badge" style="background:var(--red-bg)!important;color:#b91c1c!important;border-color:#ef4444">✗ 需加強 '+wrong.length+' 個</span><span class="badge badge-green">✓ 掌握 '+correct.length+' 個</span></div>';
   if(wrong.length){
     h+='<div class="vocab-section-label wrong" style="margin-top:.5rem">需加強的單字</div>';
-    wrong.forEach(w=>{
-      h+='<div class="vocab-item wrong"><div class="vocab-headword">'+(w.word||'')+'</div>' +
-        '<div><b>中文：</b>'+(w.word_zh||'—')+'</div>' +
-        '<div style="font-family:\'DM Mono\',monospace;font-size:.75rem;color:#b91c1c;margin-top:.2rem">答錯 '+(w.wrong_count||0)+' 次 · 答對 '+(w.correct_count||0)+' 次</div></div>';
-    });
+    wrong.forEach(w=>{h+='<div class="vocab-item wrong"><div class="vocab-headword">'+(w.word||'')+'</div><div><b>中文：</b>'+(w.word_zh||'—')+'</div><div style="font-family:\'DM Mono\',monospace;font-size:.75rem;color:#b91c1c;margin-top:.2rem">答錯 '+(w.wrong_count||0)+' 次 · 答對 '+(w.correct_count||0)+' 次</div></div>';});
   }
   if(correct.length){
     h+='<div class="vocab-section-label correct">已掌握的單字</div>';
