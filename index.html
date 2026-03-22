@@ -575,7 +575,7 @@ function loadQ(){
   document.getElementById('srcTag').textContent=q.src;
   document.getElementById('newsTitle').textContent=q.title;
   document.getElementById('newsSummary').innerHTML=q.summary.replace(
-    new RegExp('\\b'+q.word+'\\b','gi'),
+    new RegExp('\\b'+q.word+'(?:s|ed|ing|es|d)?\\b','gi'),
     '<span class="hl" title="'+q.def+'">$&</span>'
   );
   document.getElementById('qPrompt').innerHTML='What does <strong>'+q.word+'</strong> most likely mean?';
